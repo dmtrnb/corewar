@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:01:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/26 16:39:53 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:06:55 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,13 @@ void				valid_command(int ac, char **av, t_crwr **crwr)
 		ft_error("Usage: ./corewar <champion1.cor> <...>", -1);
 	if (!(*crwr = (t_crwr *)malloc(sizeof(t_crwr))))
 		ft_error("Error of malloc memory", -1);
+	(*crwr)->opt = 0;
 	i = 0;
 	while (++i != ac)
-		(*crwr)->visu = (strcmp(*(av + i), OPT_V) ? 0 : 1);	// FT
+		(*crwr)->opt |= (strcmp(*(av + i), OPT_V) ? 0 : 0x80);	// FT
+	i = 0;
+	while (++i != ac)
+		(*crwr)->opt |= (strcmp(*(av + i), OPT_A) ? 0 : 0x08);	// FT
 	i = 1;
 	if (!strcmp(*(av + 1), OPT_DUMP))	// FT
 	{
@@ -112,6 +116,7 @@ void				valid_command(int ac, char **av, t_crwr **crwr)
 	if ((n = count_players(ac, av, i)) > MAX_PLAYERS || !n)
 		ft_error("Too much players", -1);
 	(*crwr)->name = NULL;
+	(*crwr)->cursor = NULL;
 	(*crwr)->arena = NULL;
 	(*crwr)->players = create_players(n);
 	fix_created_players(ac, av, (*crwr)->players, i);

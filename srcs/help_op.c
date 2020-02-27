@@ -6,13 +6,13 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 05:15:07 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/26 17:03:38 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:06:23 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-size_t	looped(int num1, int num2)
+unsigned	looped(int num1, int num2)
 {
 	if (num1 + num2 < 0)
 		return ((num1 + num2) % MEM_SIZE + MEM_SIZE);
@@ -20,7 +20,7 @@ size_t	looped(int num1, int num2)
 		return ((num1 + num2) % MEM_SIZE);
 }
 
-int		get_direct(void *arena, size_t pc, char size_four)
+int		get_direct(void *arena, unsigned pc, char size_four)
 {
 	int		num;
 
@@ -42,11 +42,11 @@ int		get_direct(void *arena, size_t pc, char size_four)
 	return (num);
 }
 
-int		get_indirect(t_cursor *cursor, void *arena, size_t pc)
+int		get_indirect(void *arena, unsigned pc, unsigned cur_pc)
 {
 	int	num;
 
 	num = get_direct(arena, pc, 0);
-	num = get_direct(arena, looped(cursor->pc, num % IDX_MOD), 1);
+	num = get_direct(arena, looped(cur_pc, num % IDX_MOD), 1);
 	return (num);
 }
