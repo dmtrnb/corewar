@@ -38,6 +38,7 @@ typedef struct		s_visu	{
 typedef struct		s_name	{
 	char			*name;
 	char			*comment;
+	unsigned		code_size;
 	struct s_name	*next;
 }					t_name;
 
@@ -122,6 +123,10 @@ void                arena(t_crwr *crwr, t_arena *arena, t_cursor *cursor);
 void                cycle(t_crwr *crwr);
 
 void				live(t_crwr *crwr, t_cursor *temp);
+void				ld(t_crwr *crwr, t_cursor *temp);
+void				lld(t_crwr *crwr, t_cursor *temp);
+void				st(t_crwr *crwr, t_cursor *temp);
+void				sti(t_crwr *crwr, t_cursor *temp);
 
 
 void				pr(t_crwr *crwr);

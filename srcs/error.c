@@ -12,33 +12,6 @@
 
 #include "corewar.h"
 
-void    say_hello(t_players *players)
-{
-    t_players    *temp;
-    
-    printf("Introducing contestants...\n");    //    FT
-    temp = players;
-    while (temp)
-    {
-        printf("* Player %d, weighing %u bytes, \"%s\" (\"%s\") !\n", temp->id, temp->code_size, temp->name, temp->comment);    //    FT
-        temp = temp->next;
-    }
-}
-
-/*void    say_buy(const )
- {
- while (temp)
- {
- temp = crwr->players;
- if (crwr->arena->alive == list->id)
- {
- printf("Contestant %zu, \"%s\", has won !\n", temp->id, temp->name);
- break ;
- }
- list = list->next;
- }
- }
- */
 void	pri(t_cursor *cursor)
 {
 	t_cursor	*temp;

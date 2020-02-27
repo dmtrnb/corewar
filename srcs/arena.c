@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:02:56 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 20:05:13 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/27 22:36:16 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void		arena(t_crwr *crwr, t_arena *arena, t_cursor *cursor)
 	{
 		arena->cycles++;
 		arena->cycles_without_check++;
+		cycle(crwr);
 		if (arena->cycles_without_check == arena->cycles_to_die)
 			check(arena, &cursor);
-		cycle(crwr);
-		if (arena->cycles_to_die <= 0)
+		if (arena->cycles_to_die <= 0 || (int)arena->cycles == crwr->nbr_cycles)
 			break ;
 	}
 }
