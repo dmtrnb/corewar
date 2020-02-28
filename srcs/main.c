@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:39:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 14:21:14 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:46:03 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	say_buy(t_crwr *crwr)
 	unsigned	i;
 	t_name		*temp;
 
-	if (crwr->nbr_cycles >= 0)
+	if (crwr->nbr_cycles == (int)crwr->arena->cycles)
 	{
 		i = 0;
 		printf("0x0000 : ");
@@ -70,7 +70,7 @@ int		main(int ac, char **av)
 	crwr->cursor = fill_arena(crwr);
 	crwr->name = free_players(&crwr);
 	(crwr->opt & 0x80 ? NULL : say_hello(crwr->name));
-	arena(crwr, crwr->arena, crwr->cursor);
+	arena(crwr, crwr->arena);
 	(crwr->opt & 0x80 ? NULL : say_buy(crwr));
 //	free_crwr(&crwr);
 //	free_cursor(&cursor);

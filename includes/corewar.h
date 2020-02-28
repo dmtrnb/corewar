@@ -103,16 +103,18 @@ int					ft_error(char *msg, int err);
 void				valid_command(int ac, char **av, t_crwr **crwr);
 void				fix_created_players(int ac, char **av, t_players *players, int i);
 int                 ft_is_int(char *str);
-size_t            ft_players_count(t_players *list);
+unsigned			ft_players_count(t_players *list);
 
 void                valid_files(t_players *players);
 
 t_cursor            *fill_arena(t_crwr *crwr);
 t_arena				*init_arena(char alive);
 
-t_cursor			*ft_cursor_new(size_t id, size_t count_pl);
+t_cursor			*ft_cursor_new(unsigned id, unsigned count_pl);
 t_cursor			*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id);
-t_cursor			*ft_cursor_del(t_cursor **cursor);
+//t_cursor			*ft_cursor_del(t_cursor *cursor, t_cursor *temp);
+t_cursor			*ft_cursor_del(t_cursor **cursor, t_cursor **temp);
+//t_cursor			*ft_cursor_del(t_cursor **cursor);
 void				ft_cursor_add(t_cursor **cursor, t_cursor *new);
 
 unsigned			looped(int num1, int num2);
@@ -120,7 +122,7 @@ int					get_direct(void *arena, unsigned pc, char size_four);
 int					get_indirect(void *arena, unsigned pc, unsigned cur_pc);
 
 t_name				*free_players(t_crwr **crwr);
-void				arena(t_crwr *crwr, t_arena *arena, t_cursor *cursor);
+void				arena(t_crwr *crwr, t_arena *arena);
 void				cycle(t_crwr *crwr);
 
 void				live(t_crwr *crwr, t_cursor *temp);

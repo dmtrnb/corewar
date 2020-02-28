@@ -25,7 +25,7 @@ void	add(t_crwr *crwr, t_cursor *temp)
 	r3 = *(field + looped(temp->pc, 4)) - 1;
 	*(temp->registrs + r3) = *(temp->registrs + r1) + *(temp->registrs + r2);
 	temp->id = (*(temp->registrs + r3) ? \
-							temp->id & 0x7fffffff : temp->id | 0x80000000);
+							temp->id & 0x7ffffff : temp->id | 0x80000000);
 }
 
 void	sub(t_crwr *crwr, t_cursor *temp)
@@ -41,6 +41,6 @@ void	sub(t_crwr *crwr, t_cursor *temp)
 	r3 = *(field + looped(temp->pc, 4)) - 1;
 	*(temp->registrs + r3) = *(temp->registrs + r1) - *(temp->registrs + r2);
 	temp->id = (*(temp->registrs + r3) ? \
-							temp->id & 0x7fffffff : temp->id | 0x80000000);
+							temp->id & 0x7ffffff : temp->id | 0x80000000);
 }
 

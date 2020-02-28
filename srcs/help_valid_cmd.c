@@ -12,9 +12,9 @@
 
 #include "corewar.h"
 
-size_t			ft_players_count(t_players *list)
+unsigned		ft_players_count(t_players *list)
 {
-	size_t		count;
+	unsigned	count;
 	t_players	*temp;
 
 	count = 0;

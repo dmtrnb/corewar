@@ -30,7 +30,7 @@ void		ld(t_crwr *crwr, t_cursor *temp)
 		num = get_direct(crwr->arena->field, looped(temp->pc, 2), 1);
 	}
 	*(temp->registrs + r) = num;
-	temp->id = (num ? temp->id & 0x7fffffff : temp->id | 0x80000000);
+	temp->id = (num ? temp->id & 0x7ffffff : temp->id | 0x80000000);
 }
 
 void		lld(t_crwr *crwr, t_cursor *temp)
@@ -52,5 +52,5 @@ void		lld(t_crwr *crwr, t_cursor *temp)
 		num = get_direct(crwr->arena->field, looped(temp->pc, 2), 1);
 	}
 	*(temp->registrs + r) = num;
-	temp->id = (num ? temp->id & 0x7fffffff : temp->id | 0x80000000);
+	temp->id = (num ? temp->id & 0x7ffffff : temp->id | 0x80000000);
 }

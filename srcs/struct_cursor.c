@@ -6,32 +6,41 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:21:18 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 15:15:16 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 17:25:54 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_cursor	*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id)
+t_cursor	*ft_cursor_del(t_cursor **cursor, t_cursor **temp)
 {
-	unsigned char	i;
-	t_cursor		*new;
+	t_cursor	*del;
+	t_cursor	*ret;
 
-	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
-		ft_error("Problem with malloc for carriage", -1);
-	new->id = (id & 0x7fffffff) | (temp->id & 0xf8000000);
-	new->pc = pc;
-	i = 0;
-	while (i != REG_NUMBER)
+	if (cursor && *cursor && *cursor == *temp)
 	{
-		*(new->registrs + i) = *(temp->registrs + i);
-		i++;
+		if ((*cursor)->next)
+			(*cursor)->next->prev = (*cursor)->prev;
+		*cursor = (*cursor)->next;
+		free(*temp);
+		return (*cursor);
 	}
-	new->last_live = temp->last_live;
-	return (new);
+	else if (temp && *temp)
+	{
+		del = *temp;
+		ret = del->next;
+		if (del->prev)
+			del->prev->next = del->next;
+		if (del->next)
+			del->next->prev = del->prev;
+		free(del);
+		del = NULL;
+		return (ret);
+	}
+	return (NULL);
 }
 
-t_cursor	*ft_cursor_new(size_t id, size_t count_pl)
+t_cursor	*ft_cursor_new(unsigned id, unsigned count_pl)
 {
 	size_t		i;
 	t_cursor	*new;
@@ -52,6 +61,27 @@ t_cursor	*ft_cursor_new(size_t id, size_t count_pl)
 	return (new);
 }
 
+t_cursor	*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id)
+{
+	unsigned char	i;
+	t_cursor		*new;
+
+	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
+		ft_error("Problem with malloc for carriage", -1);
+	new->id = (id & 0x7ffffff) | (temp->id & 0xf8000000);
+	new->pc = pc;
+	i = 0;
+	while (i != REG_NUMBER)
+	{
+		*(new->registrs + i) = *(temp->registrs + i);
+		i++;
+	}
+	new->last_live = temp->last_live;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
+}
+
 void		ft_cursor_add(t_cursor **cursor, t_cursor *new)
 {
 	if (*cursor && new)
@@ -62,24 +92,4 @@ void		ft_cursor_add(t_cursor **cursor, t_cursor *new)
 	}
 	else if (!(*cursor) && new)
 		*cursor = new;
-}
-
-t_cursor	*ft_cursor_del(t_cursor **cursor)
-{
-	t_cursor	*del;
-	t_cursor	*ret;
-
-	if (cursor && *cursor)
-	{
-		del = *cursor;
-		ret = del->next;
-		if (del->prev)
-			del->next = del->next;
-		if (del->next)
-			del->next->prev = del->prev;
-		free(del);
-		del = NULL;
-		return (ret);
-	}
-	return (NULL);
 }
