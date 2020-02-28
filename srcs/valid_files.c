@@ -36,7 +36,7 @@ static void	check_code_size(int fd, unsigned char *buf, t_players *players)
 	size += *(buf + 0) << 24;
 	if (size > CHAMP_MAX_SIZE)
 	{
-		printf("Слишком большой код для чемпиона %s from %s", players->name, players->filename); //FT
+		printf("Слишком большой код для чемпиона %s from %s (%u bytes vs. %u bytes)\n", players->name, players->filename, size, CHAMP_MAX_SIZE); //FT
 		exit(-3);	// FT
 	}
 	players->code_size = size;

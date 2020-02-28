@@ -63,5 +63,5 @@ void		lldi(t_crwr *crwr, t_cursor *temp)
 	off += (arg & 0x10 ? 1 : 2);
 	num = get_direct(field, looped(temp->pc, adr), 1);
 	*(temp->registrs + *(field + looped(temp->pc, off)) - 1) = num;
-	temp->id = (num ? temp->id & 0x7ffffff : temp->id | 0x80000000);
+	temp->id = (num ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }

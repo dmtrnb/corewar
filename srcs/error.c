@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:28:27 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 18:46:42 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 20:31:25 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,30 @@ void	pri(t_cursor *cursor)
 {
 	t_cursor	*temp;
 
+	if (!cursor)
+		return ;
+    printf("cursors: ");
 	temp = cursor;
 	while (temp->next)
 	{
-		printf("%u ", (temp->id >> 27) & 0xf);
+        printf("%u ", temp->id & 0x7ffffff);
+        printf("%u ", temp->pc);
+//        printf("%u ", (temp->id >> 27) & 0xf);
 		temp = temp->next;
 	}
-	printf("%u ", (temp->id >> 27) & 0xf);
+//    printf("%u ", (temp->id >> 27) & 0xf);
+	printf("%u ", temp->id & 0x7ffffff);
+    printf("%u ", temp->pc);
 	while (temp->prev)
 	{
-		printf("%u ", (temp->id >> 27) & 0xf);
+        printf("%u ", temp->id & 0x7ffffff);
+        printf("%u ", temp->pc);
+//        printf("%u ", (temp->id >> 27) & 0xf);
 		temp = temp->prev;
 	}
-	printf("%u ", (temp->id >> 27) & 0xf);
+    printf("%u ", temp->id & 0x7ffffff);
+    printf("%u ", temp->pc);
+//	printf("%u ", (temp->id >> 27) & 0xf);
 	printf("\n");
 }
 
@@ -73,6 +84,7 @@ void    pr(t_crwr *crwr)
         printf(" %02x", *((unsigned char *)crwr->arena->field + i));
         i++;
     }
+	printf("\nalive: %d\nnbr_live: %u\ncycles_without_check: %u\ncycles_to_die: %u\nnbr_check: %u\n", crwr->arena->alive, crwr->arena->nbr_live, crwr->arena->cycles_without_check, crwr->arena->cycles_to_die, crwr->arena->nbr_check);
 }
 
 int        ft_error(char *line, int i)

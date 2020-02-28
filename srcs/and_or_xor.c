@@ -43,7 +43,7 @@ void			and(t_crwr *crwr, t_cursor *temp)
 	pc = get_pc_and_num(&num1, field, temp, pc);
 	pc = get_pc_and_num(&num2, field, temp, pc);
 	*(temp->registrs + *(field + pc) - 1) = num1 & num2;
-	temp->id = (num1 & num2 ? temp->id & 0x7ffffff : temp->id | 0x80000000);
+	temp->id = (num1 & num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
 
 void			or(t_crwr *crwr, t_cursor *temp)
@@ -58,7 +58,7 @@ void			or(t_crwr *crwr, t_cursor *temp)
 	pc = get_pc_and_num(&num1, field, temp, pc);
 	pc = get_pc_and_num(&num2, field, temp, pc);
 	*(temp->registrs + *(field + pc) - 1) = num1 | num2;
-	temp->id = (num1 & num2 ? temp->id & 0x7ffffff : temp->id | 0x80000000);
+	temp->id = (num1 & num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
 
 void			xor(t_crwr *crwr, t_cursor *temp)
@@ -73,5 +73,5 @@ void			xor(t_crwr *crwr, t_cursor *temp)
 	pc = get_pc_and_num(&num1, field, temp, pc);
 	pc = get_pc_and_num(&num2, field, temp, pc);
 	*(temp->registrs + *(field + pc) - 1) = num1 ^ num2;
-	temp->id = (num1 & num2 ? temp->id & 0x7ffffff : temp->id | 0x80000000);
+	temp->id = (num1 & num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
