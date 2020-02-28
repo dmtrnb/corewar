@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:04:14 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 22:39:46 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:20:57 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 	correct = 1;
 	*step = 1;
 	*num = *(field + temp->pc) - 1;
-	if (*num >= 0x0f)
+	if (*num > 0x0f)
 		return (0);
 	arg = (g_op_tab[*num].args_exists ? *(field + looped(temp->pc, 1)) : 0x80);
 	*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? 2 : 1);

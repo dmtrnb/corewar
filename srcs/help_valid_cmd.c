@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:37:40 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/26 17:05:05 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:05:13 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void			fix_created_players(int ac, char **av, t_players *players, \
 	while (j < ac)
 		if (!strcmp(*(av + j), OPT_N))	// FT
 			j += 3;
+		else if (!strcmp(*(av + j), OPT_A))	// FT
+			j++;
 		else
 		{
 			(strcmp(av[j], OPT_V) ? set_free_pl(players, av[j]) : NULL);	//FT

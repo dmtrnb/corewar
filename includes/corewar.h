@@ -111,22 +111,34 @@ t_cursor            *fill_arena(t_crwr *crwr);
 t_arena				*init_arena(char alive);
 
 t_cursor			*ft_cursor_new(size_t id, size_t count_pl);
+t_cursor			*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id);
 t_cursor			*ft_cursor_del(t_cursor **cursor);
 void				ft_cursor_add(t_cursor **cursor, t_cursor *new);
 
-unsigned                looped(int num1, int num2);
-int                    get_direct(void *arena, unsigned pc, char size_four);
-int                    get_indirect(void *arena, unsigned pc, unsigned cur_pc);
+unsigned			looped(int num1, int num2);
+int					get_direct(void *arena, unsigned pc, char size_four);
+int					get_indirect(void *arena, unsigned pc, unsigned cur_pc);
 
-t_name              *free_players(t_crwr **crwr);
-void                arena(t_crwr *crwr, t_arena *arena, t_cursor *cursor);
-void                cycle(t_crwr *crwr);
+t_name				*free_players(t_crwr **crwr);
+void				arena(t_crwr *crwr, t_arena *arena, t_cursor *cursor);
+void				cycle(t_crwr *crwr);
 
 void				live(t_crwr *crwr, t_cursor *temp);
 void				ld(t_crwr *crwr, t_cursor *temp);
 void				lld(t_crwr *crwr, t_cursor *temp);
 void				st(t_crwr *crwr, t_cursor *temp);
 void				sti(t_crwr *crwr, t_cursor *temp);
+void				add(t_crwr *crwr, t_cursor *temp);
+void				sub(t_crwr *crwr, t_cursor *temp);
+void				and(t_crwr *crwr, t_cursor *temp);
+void				or(t_crwr *crwr, t_cursor *temp);
+void				xor(t_crwr *crwr, t_cursor *temp);
+void				zjmp(t_crwr *crwr, t_cursor *temp);
+void				aff(t_crwr *crwr, t_cursor *temp);
+void				cfork(t_crwr *crwr, t_cursor *temp);
+void				lfork(t_crwr *crwr, t_cursor *temp);
+void				ldi(t_crwr *crwr, t_cursor *temp);
+void				lldi(t_crwr *crwr, t_cursor *temp);
 
 
 void				pr(t_crwr *crwr);

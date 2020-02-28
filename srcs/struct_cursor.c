@@ -6,11 +6,30 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:21:18 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 20:01:08 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 15:15:16 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+t_cursor	*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id)
+{
+	unsigned char	i;
+	t_cursor		*new;
+
+	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
+		ft_error("Problem with malloc for carriage", -1);
+	new->id = (id & 0x7fffffff) | (temp->id & 0xf8000000);
+	new->pc = pc;
+	i = 0;
+	while (i != REG_NUMBER)
+	{
+		*(new->registrs + i) = *(temp->registrs + i);
+		i++;
+	}
+	new->last_live = temp->last_live;
+	return (new);
+}
 
 t_cursor	*ft_cursor_new(size_t id, size_t count_pl)
 {

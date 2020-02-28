@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:01:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 17:06:55 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:01:55 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int		count_players(int ac, char **av, int i)
 				ft_error("Wrong number of parameters", -1);
 		}
 		else if (!strcmp(*(av + i), OPT_V))	// FT
+			i++;
+		else if (!strcmp(*(av + i), OPT_A))	// FT
 			i++;
 		else
 		{

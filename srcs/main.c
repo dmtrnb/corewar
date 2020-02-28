@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:39:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 21:05:23 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/28 14:21:14 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	say_buy(t_crwr *crwr)
 	if (crwr->nbr_cycles >= 0)
 	{
 		i = 0;
-		printf("0x0000:");
+		printf("0x0000 : ");
 		while (i != MEM_SIZE)
 		{
 			if (i && !(i % COLUMNS))
-				printf("\n%#06x:", i);
-			printf(" %02x", *((unsigned char *)crwr->arena->field + i));
+				printf("\n%#06x : ", i);
+			printf("%02x ", *((unsigned char *)crwr->arena->field + i));
 			i++;
 		}
 		printf("\n");
