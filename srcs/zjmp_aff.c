@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:40:09 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 14:27:15 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/29 14:34:09 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	zjmp(t_crwr *crwr, t_cursor *temp)
 
 	num = get_direct(crwr->arena->field, temp->pc + 1, 0);
 	if (temp->id & 0x80000000)
-		temp->pc = looped(num % IDX_MOD, -3);
+	{
+//		printf("ZJMP: %u %u->", crwr->arena->cycles, temp->pc);
+		temp->pc = looped(temp->pc, num % IDX_MOD - 3);
+	}
 }
 
 void	aff(t_crwr *crwr, t_cursor *temp)

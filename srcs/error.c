@@ -73,7 +73,7 @@ void    pr(t_crwr *crwr)
     t_cursor    *cursor = crwr->cursor;
     while (cursor)
     {
-        printf("\nid_cur:%d\n\n", cursor->id);
+//        printf("\nid_cur:%d\n\n", cursor->id);
         cursor = cursor->next;
     }
     i = 0;

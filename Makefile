@@ -6,13 +6,13 @@
 #    By: nhamill <nhamill@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/18 13:10:09 by nhamill           #+#    #+#              #
-#    Updated: 2020/02/28 15:30:53 by nhamill          ###   ########.fr        #
+#    Updated: 2020/02/29 15:00:03 by nhamill          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = corewar
 
-FLGS = -Wall -Wextra -Werror -MMD -MP
+FLGS = -Wall -Wextra -Werror -MMD -MP -g
 
 CC = gcc
 
@@ -51,7 +51,7 @@ $(LIB): LIBA
 $(PRINT): LIBA
 
 %.o: %.c
-	$(CC) $(FLGS) -g -c $< -o $@ $(INC)
+	$(CC) $(FLGS) -c $< -o $@ $(INC)
 
 -include $(DEP)
 

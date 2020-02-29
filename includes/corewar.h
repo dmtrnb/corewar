@@ -57,7 +57,7 @@ typedef struct		s_arena	{
     unsigned        nbr_live;
 	unsigned   		cycles;
     unsigned		cycles_without_check;
-	unsigned		cycles_to_die;
+	int		cycles_to_die;
 	unsigned		nbr_check;
     void            *field;
     void            *par_field;

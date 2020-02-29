@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:04:14 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 19:59:00 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/29 19:24:24 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char			correct_reg(unsigned char *field, t_cursor *temp, unsigned char num, unsi
 	unsigned		pc;
 	unsigned char	code;
 
-	i = 0;
+    i = 0;
 	pc = (g_op_tab[num].args_exists ? looped(temp->pc, 2) : looped(temp->pc, 1));
 	while (i < g_op_tab[num].args)
 	{
-		code = arg >> (6 - i * 2);
+		code = (arg >> (6 - i * 2)) & 0x03;
 		if (code == REG_CODE)
 		{
-			if (*(field + pc) && *(field + pc) >= REG_NUMBER)
+			if (*(field + pc) && *(field + pc) > REG_NUMBER)
 				return (0);
 			pc = looped(pc, 1);
 		}
@@ -76,15 +76,17 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 	correct = 1;
 	*step = 1;
 	*num = *(field + temp->pc) - 1;
-	if (*num > 0x0f)
-		return (0);
-	arg = (g_op_tab[*num].args_exists ? *(field + looped(temp->pc, 1)) : 0x80);
-	*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? 2 : 1);
-	if (!correct || !correct_reg(field, temp, *num, arg))
-		return (0);
+	if (*num < 0x10)
+	{
+		arg = (g_op_tab[*num].args_exists ? *(field + looped(temp->pc, 1)) : 0x80);
+		*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? 2 : 1);
+		correct = (correct ? correct_reg(field, temp, *num, arg) : 0);
+	}
+	else
+		correct = 0;
 	next = *(field + looped(temp->pc, *step)) - 1;
 	temp->wait = (next < 0x10 ? g_op_tab[next].wait - 1 : 0);
-	return (1);
+	return (correct);
 }
 
 void			cycle(t_crwr *crwr)
@@ -99,7 +101,9 @@ void			cycle(t_crwr *crwr)
 		if (!temp->wait)
 		{
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
+			{
 				g_op_tab[num].func(crwr, temp);
+			}
 			temp->pc = looped(temp->pc, step);
 		}
 		else

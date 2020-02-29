@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:21:18 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 19:52:50 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/29 17:59:28 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ t_cursor	*ft_cursor_del(t_cursor **cursor, t_cursor **temp)
 	t_cursor	*del;
 	t_cursor	*ret;
 
+	if ((*temp)->pc > MEM_SIZE)
+		printf("del_id: %u\n", (*temp)->id & 0x7ffffff);
 	if (cursor && *cursor && *cursor == *temp)
 	{
 		if ((*cursor)->next)
 			(*cursor)->next->prev = (*cursor)->prev;
 		*cursor = (*cursor)->next;
 		free(*temp);
-		return (*cursor);
+		return (*cursor ? *cursor : NULL);
 	}
 	else if (temp && *temp)
 	{
@@ -33,9 +35,9 @@ t_cursor	*ft_cursor_del(t_cursor **cursor, t_cursor **temp)
 			del->prev->next = del->next;
 		if (del->next)
 			del->next->prev = del->prev;
-		free(del);
-		del = NULL;
-		return (ret);
+		free(*temp);
+		*temp = NULL;
+		return (ret ? ret : NULL);
 	}
 	return (NULL);
 }
@@ -66,10 +68,11 @@ t_cursor	*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id)
 	unsigned char	i;
 	t_cursor		*new;
 
+    if (pc > MEM_SIZE)
+        printf("!!%u\n", pc);
 	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
 		ft_error("Problem with malloc for carriage", -1);
 	new->id = (id & 0x7ffffff) | (temp->id & 0xf8000000);
-    printf("new_id: %u new_pid: %u\n", new->id & 0x7ffffff, (new->id >> 27) & 0xf);
 	new->pc = pc;
 	i = 0;
 	while (i != REG_NUMBER)
