@@ -34,7 +34,7 @@ void		live(t_crwr *crwr, t_cursor *temp)
 	int		num;
 
 	temp->last_live = crwr->arena->cycles;
-    printf("LIVE: %u id: %u\n", temp->last_live, temp->id & 0x7ffffff);
+ //   printf("LIVE: %u id: %u\n", temp->last_live, temp->id & 0x7ffffff);
 	num = ~get_direct(crwr->arena->field, looped(temp->pc, 1), 1) + 1;
 	if (player_exists(crwr->name, num))
 	{

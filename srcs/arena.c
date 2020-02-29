@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:02:56 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 20:13:01 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/02/29 20:25:37 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	check(t_arena *arena, t_cursor **cursor)
 {
 	t_cursor	*temp;
 
-	unsigned wo = arena->cycles_without_check;
-	unsigned ct = 0;
-	unsigned count = 0;
+//	unsigned wo = arena->cycles_without_check;
+//	unsigned ct = 0;
+//	unsigned count = 0;
 	
 	arena->nbr_check++;
 	if (arena->nbr_live >= NBR_LIVE || arena->nbr_check >= MAX_CHECKS)
@@ -31,18 +31,18 @@ static void	check(t_arena *arena, t_cursor **cursor)
 	temp = *cursor;
 	while (temp)
 	{
-		ct++;
+//		ct++;
 		temp = (arena->cycles - temp->last_live >= (unsigned)arena->cycles_to_die ? \
 				ft_cursor_del(cursor, &temp) : temp->next);
 	}
 	temp = *cursor;
 	while (temp)
 	{
-		count++;
-		printf("pid: %4u id: %4u last_live: %4u\n", (temp->id >> 27) & 0xf, temp->id & 0x7ffffff, temp->last_live);
+//		count++;
+//		printf("pid: %4u id: %4u last_live: %4u\n", (temp->id >> 27) & 0xf, temp->id & 0x7ffffff, temp->last_live);
 		temp = temp->next;
 	}
-	printf("CYCLES: %u (%u) --- COUNT: %u->%u\n", arena->cycles, wo, ct, count);
+//	printf("CYCLES: %u (%u) --- COUNT: %u->%u\n", arena->cycles, wo, ct, count);
 }
 
 void		arena(t_crwr *crwr, t_arena *arena)

@@ -145,3 +145,24 @@ void				lldi(t_crwr *crwr, t_cursor *temp);
 
 void				pr(t_crwr *crwr);
 void				pri(t_cursor *cursor);
+
+
+#define A1 "Cycles:       "
+#define A2 "Alive:        "
+#define A3 "nbr_live:     "
+#define A4 "Cycle_to_die: "
+#define A9 "Operation:    "
+#define A5 "ID of cursor: "
+#define A6 "pc of cursor: "
+#define A7 "last_live:    "
+#define A8 "Registrs:     "
+#define A10 "Arguments:    "
+#define A11 "Arg1:         "
+#define A12 "Arg2:         "
+#define A13 "Arg3:         "
+#define A21 "\n"
+#define A22 "---"
+#define A23 "REG"
+#define A24 "DIR"
+#define A25 "IND"
+#define A26 " | "

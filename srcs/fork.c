@@ -21,7 +21,7 @@ void	cfork(t_crwr *crwr, t_cursor *temp)
 	ft_cursor_add(&(crwr->cursor), ft_cursor_fork(temp, looped(temp->pc, num % IDX_MOD), crwr->cursor->id + 1));
 	num_code = *((unsigned char *)crwr->arena->field + crwr->cursor->pc) - 1;
 	crwr->cursor->wait = (num_code < 0x10 ? g_op_tab[num_code].wait - 1: 0);
-	printf("FORK: %u; OLD_ID: %u %u ID: %u %u\n", crwr->arena->cycles, temp->id & 0x7ffffff, temp->pc, crwr->cursor->id & 0x7ffffff, crwr->cursor->pc);
+//	printf("FORK: %u; OLD_ID: %u %u ID: %u %u\n", crwr->arena->cycles, temp->id & 0x7ffffff, temp->pc, crwr->cursor->id & 0x7ffffff, crwr->cursor->pc);
 }
 
 void	lfork(t_crwr *crwr, t_cursor *temp)
@@ -33,5 +33,5 @@ void	lfork(t_crwr *crwr, t_cursor *temp)
 	ft_cursor_add(&(crwr->cursor), ft_cursor_fork(temp, looped(temp->pc, num), crwr->cursor->id));
 	num_code = *((unsigned char *)crwr->arena->field + crwr->cursor->pc) - 1;
 	crwr->cursor->wait = (num_code < 0x10 ? g_op_tab[num_code].wait - 1: 0);
-	printf("FORK: %u; OLD_ID: %u ID: %u\n", crwr->arena->cycles, temp->id & 0x7ffffff, crwr->cursor->id & 0x7ffffff);
+//	printf("FORK: %u; OLD_ID: %u ID: %u\n", crwr->arena->cycles, temp->id & 0x7ffffff, crwr->cursor->id & 0x7ffffff);
 }
