@@ -3,6 +3,55 @@
 void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 {
 	printf(A27);
+	if (num == 9)
+	{
+		int				num1;
+		int				num2;
+		unsigned		pc;
+		unsigned char	arg;
+		unsigned char	reg;
+		unsigned char	*field;
+
+		field = (unsigned char *)arena->field;
+		arg = *(field + looped(temp->pc, 1));
+		pc = looped(temp->pc, 2);
+		if (arg & 0x80 && arg & 0x40)
+		{
+			num1 = get_indirect(arena->field, pc, temp->pc);
+			printf("(PC (%u) + (at %02x%02x steps (%d) +", temp->pc, *(field + pc), *(field + looped(pc, 1)), num1);
+			pc = looped(pc, 2);
+		}
+		else if (arg & 0x40)
+		{
+			reg = *(field + pc);
+			num1 = *(temp->registrs + reg - 1);
+			printf("(PC (%u) + (r%u (%d) +", temp->pc, reg, num1);
+			pc = looped(pc, 1);
+		}
+		else
+		{
+			num1 = get_direct(arena->field, pc, 0);
+			printf("(PC (%u) + (%d +", temp->pc, num1);
+			pc = looped(pc, 2);
+		}
+		if (arg & 0x10)
+		{
+			reg = *(field + pc);
+			num2 = *(temp->registrs + reg - 1);
+			printf(" r%u (%d)) %% IDX_MOD) = ", reg, num2);
+			pc = looped(pc, 1);
+		}
+		else
+		{
+			num2 = get_direct(arena->field, pc, 0);
+			printf(" %d) %% IDX_MOD) = ", num2);
+			pc = looped(pc, 2);
+		}
+		reg = *(field + pc);
+		num1 = looped(temp->pc, (num1 + num2) % IDX_MOD);
+		num2 = get_direct(arena->field, num1, 1);
+		printf("%d ==== %02x%02x%02x%02x -> r%u", num1, (num2 >> 24) & 0xff, (num2 >> 16) & 0xff, (num2 >> 8) & 0xff, (num2 >> 0) & 0xff, reg);
+	}
 	if (num == 0)
 	{
 		int	live;
@@ -100,7 +149,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num1 = get_direct(arena->field, looped(temp->pc, 2), 0);
 			printf("at %d steps ", num1);
-			num1 = get_indirect(arena, looped(temp->pc, 2), temp->pc);
+			num1 = get_indirect(arena->field, looped(temp->pc, 2), temp->pc);
 			printf("(%x) AND ", num1);
 			pc = looped(temp->pc, 4);
 		}
@@ -121,7 +170,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num2 = get_direct(arena->field, pc, 0);
 			printf("at %d steps ", num2);
-			num2 = get_indirect(arena, pc, temp->pc);
+			num2 = get_indirect(arena->field, pc, temp->pc);
 			printf("(%x)", num2);
 			pc = looped(pc, 2);
 		}
@@ -156,7 +205,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num1 = get_direct(arena->field, looped(temp->pc, 2), 0);
 			printf("at %d steps ", num1);
-			num1 = get_indirect(arena, looped(temp->pc, 2), temp->pc);
+			num1 = get_indirect(arena->field, looped(temp->pc, 2), temp->pc);
 			printf("(%x) OR ", num1);
 			pc = looped(temp->pc, 4);
 		}
@@ -177,7 +226,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num2 = get_direct(arena->field, pc, 0);
 			printf("at %d steps ", num2);
-			num2 = get_indirect(arena, pc, temp->pc);
+			num2 = get_indirect(arena->field, pc, temp->pc);
 			printf("(%x)", num2);
 			pc = looped(pc, 2);
 		}
@@ -212,7 +261,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num1 = get_direct(arena->field, looped(temp->pc, 2), 0);
 			printf("at %d steps ", num1);
-			num1 = get_indirect(arena, looped(temp->pc, 2), temp->pc);
+			num1 = get_indirect(arena->field, looped(temp->pc, 2), temp->pc);
 			printf("(%x) XOR ", num1);
 			pc = looped(temp->pc, 4);
 		}
@@ -233,7 +282,7 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		{
 			num2 = get_direct(arena->field, pc, 0);
 			printf("at %d steps ", num2);
-			num2 = get_indirect(arena, pc, temp->pc);
+			num2 = get_indirect(arena->field, pc, temp->pc);
 			printf("(%x)", num2);
 			pc = looped(pc, 2);
 		}

@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:04:14 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 16:06:25 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:20:51 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char			correct_reg(unsigned char *field, t_cursor *temp, unsigned char num, unsi
 		code = (arg >> (6 - i * 2)) & 0x03;
 		if (code == REG_CODE)
 		{
-			if (*(field + pc) && *(field + pc) > REG_NUMBER)
+			if (!(*(field + pc)) || *(field + pc) > REG_NUMBER)
 				return (0);
 			pc = looped(pc, 1);
 		}

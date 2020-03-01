@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 15:30:12 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 19:06:21 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:15:20 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void		ldi(t_crwr *crwr, t_cursor *temp)
 	adr = looped(adr % IDX_MOD, 0);
 	off += (arg & 0x10 ? 1 : 2);
 	num = get_direct(field, looped(temp->pc, adr), 1);
+	printf("%u->", temp->pc);
 	*(temp->registrs + *(field + looped(temp->pc, off)) - 1) = num;
+	printf("%u\n", temp->pc);
 }
 
 void		lldi(t_crwr *crwr, t_cursor *temp)
