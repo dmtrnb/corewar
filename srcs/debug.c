@@ -272,9 +272,9 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		int				num;
 		unsigned char	reg;
 
-		reg = *((unsigned char *)arena->field + looped(temp->pc, 1));
+		reg = *((unsigned char *)arena->field + looped(temp->pc, 2));
 		num = *(temp->registrs + reg - 1);
-		printf("r%u (%d) print", reg, num);
+		printf("r%u (%d) \"%c\" print", reg, num, num);
 	}
 	printf(A21);
 }
