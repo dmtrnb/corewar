@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:09:30 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 20:19:06 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 19:17:09 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ void		live(t_crwr *crwr, t_cursor *temp)
 	int		num;
 
 	temp->last_live = crwr->arena->cycles;
- //   printf("LIVE: %u id: %u\n", temp->last_live, temp->id & 0x7ffffff);
 	num = ~get_direct(crwr->arena->field, looped(temp->pc, 1), 1) + 1;
+	crwr->arena->nbr_live++;
 	if (player_exists(crwr->name, num))
-	{
 		crwr->arena->alive = num;
-		crwr->arena->nbr_live++;
-	}
 }
 /*
 	int		attrs;

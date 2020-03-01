@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:02:56 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 18:21:41 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 19:12:34 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ static void	check(t_arena *arena, t_cursor **cursor)
 {
 	t_cursor	*temp;
 
-	unsigned wo = arena->cycles_without_check;
-	unsigned ct = 0;
-	unsigned count = 0;
-	
 	arena->nbr_check++;
 	if (arena->nbr_live >= NBR_LIVE || arena->nbr_check >= MAX_CHECKS)
 	{
@@ -29,6 +25,11 @@ static void	check(t_arena *arena, t_cursor **cursor)
 	arena->nbr_live = 0;
 	arena->cycles_without_check = 0;
 	temp = *cursor;
+
+	unsigned wo = arena->cycles_without_check;
+	unsigned ct = 0;
+	unsigned count = 0;
+	
 	while (temp)
 	{
 		ct++;

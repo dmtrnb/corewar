@@ -36,9 +36,7 @@ void		ldi(t_crwr *crwr, t_cursor *temp)
 	adr = looped(adr % IDX_MOD, 0);
 	off += (arg & 0x10 ? 1 : 2);
 	num = get_direct(field, looped(temp->pc, adr), 1);
-	printf("%u->", temp->pc);
 	*(temp->registrs + *(field + looped(temp->pc, off)) - 1) = num;
-	printf("%u\n", temp->pc);
 }
 
 void		lldi(t_crwr *crwr, t_cursor *temp)
