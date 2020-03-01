@@ -253,6 +253,18 @@ void		debug_action(t_arena *arena, t_cursor *temp, unsigned num)
 		reg = *(field + pc);
 		printf(" -> r%u = %d", reg, num1 ^ num2);
 	}
+	else if (num == 8)
+	{
+		int		num;
+
+		if (temp->id & 0x80000000)
+		{
+			num = get_direct(arena->field, looped(temp->pc, 1), 0) % IDX_MOD;
+			printf("Jumping at %02x%02x (%d) steps -> %u pc", *((unsigned char *)arena->field + looped(temp->pc, 1)), *((unsigned char *)arena->field + looped(temp->pc, 2)), num, looped(temp->pc, num));
+		}
+		else
+			printf("Not jump. pc(%u)->new_pc(%u)", temp->pc, looped(temp->pc, 3));
+	}
 	else if (num == 11)
 	{
 		int		num;

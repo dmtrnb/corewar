@@ -16,11 +16,11 @@ void	zjmp(t_crwr *crwr, t_cursor *temp)
 {
 	int		num;
 
-	num = get_direct(crwr->arena->field, temp->pc + 1, 0);
 	if (temp->id & 0x80000000)
 	{
+        num = get_direct(crwr->arena->field, looped(temp->pc, 1), 0);
 //		printf("ZJMP: %u %u->", crwr->arena->cycles, temp->pc);
-		temp->pc = looped(temp->pc, num % IDX_MOD - 3);
+		temp->pc = looped(temp->pc, num % IDX_MOD);
 	}
 }
 

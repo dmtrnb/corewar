@@ -30,7 +30,7 @@ char			correct_reg(unsigned char *field, t_cursor *temp, unsigned char num, unsi
 			pc = looped(pc, 1);
 		}
 		else if (code == DIR_CODE)
-			pc = (g_op_tab[num].dir_is_four ? looped(pc, DIR_SIZE) : looped(pc, 2));
+			pc = (g_op_tab[num].dir_is_four ? looped(pc, 2) : looped(pc, DIR_SIZE));
 		else if (code == IND_CODE)
 			pc = looped(pc, IND_SIZE);
 		i++;
