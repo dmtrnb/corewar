@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:04:14 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 15:54:53 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 16:06:25 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,12 @@ void			cycle(t_crwr *crwr)
 	{
 		if (!temp->wait)
 		{
-//			printf("%d ", temp->pc);
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
 			{
-//			printf("%d ", temp->pc);
 				g_op_tab[num].func(crwr, temp);
-//				debug(crwr->arena, temp, num);
+				debug(crwr->arena, temp, num);
 			}
-//			printf("%s ", g_op_tab[num].name);
 			temp->pc = looped(temp->pc, step);
-//			printf("%d %u %u\n", temp->pc, step, crwr->arena->cycles);
 		}
 		else
 			temp->wait--;
