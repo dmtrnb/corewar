@@ -147,6 +147,8 @@ void				pr(t_crwr *crwr);
 void				pri(t_cursor *cursor);
 
 
+
+void                debug(t_arena *arena, t_cursor *temp, unsigned num);
 #define A1 "Cycles:       "
 #define A2 "Alive:        "
 #define A3 "nbr_live:     "
@@ -166,3 +168,4 @@ void				pri(t_cursor *cursor);
 #define A24 "DIR"
 #define A25 "IND"
 #define A26 " | "
+#define A27 "Action:       "

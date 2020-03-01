@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:02:56 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 20:25:37 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:50:41 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ void		arena(t_crwr *crwr, t_arena *arena)
 	{
 		arena->cycles++;
 		arena->cycles_without_check++;
+//		printf("%s %d ", g_op_tab[*((unsigned char *)arena->field + crwr->cursor->pc) - 1].name, crwr->cursor->pc);
 		cycle(crwr);
+//		printf("%d %u\n", crwr->cursor->pc, crwr->arena->cycles);
 		if (arena->cycles_without_check == (unsigned)arena->cycles_to_die)
 			check(arena, &(crwr->cursor));
 		if (arena->cycles_to_die <= 0 || (int)arena->cycles == crwr->nbr_cycles)

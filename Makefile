@@ -6,7 +6,7 @@
 #    By: nhamill <nhamill@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/18 13:10:09 by nhamill           #+#    #+#              #
-#    Updated: 2020/02/29 15:00:03 by nhamill          ###   ########.fr        #
+#    Updated: 2020/03/01 13:48:33 by nhamill          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -21,6 +21,7 @@ DIR = srcs
 SRC = main.c valid_cmd.c help_valid_cmd.c valid_files.c init_arena.c op.c \
 		struct_cursor.c help_op.c struct_name.c arena.c error.c  cycle.c \
 		live.c ld.c st.c add_sub.c and_or_xor.c zjmp_aff.c fork.c ldi.c \
+		debug.c
 
 SRCS = $(addprefix $(DIR)/,$(SRC))
 
