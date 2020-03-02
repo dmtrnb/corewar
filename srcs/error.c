@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:28:27 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 20:31:25 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/02 12:15:12 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,18 @@ void    pr(t_crwr *crwr)
         }
         temp = temp->next;
     }
-    t_name    *name = crwr->name;
-    
     int i = 1;
+/*    t_name    *name = crwr->name;
+    
     while (name)
     {
         printf("%d %s\n%s\n", i, name->name, name->comment);
         name = name->next;
         i++;
     }
-    t_cursor    *cursor = crwr->cursor;
+*/
+	int fd = open("0", O_WRONLY | O_CREAT);
+	t_cursor    *cursor = crwr->cursor;
     while (cursor)
     {
 //        printf("\nid_cur:%d\n\n", cursor->id);
@@ -80,11 +82,13 @@ void    pr(t_crwr *crwr)
     while (i != MEM_SIZE)
     {
         if (i && !(i % COLUMNS))
-            printf("\n");
-        printf(" %02x", *((unsigned char *)crwr->arena->field + i));
+            dprintf(fd, "\n");
+        dprintf(fd, " %02x", *((unsigned char *)crwr->arena->field + i));
         i++;
     }
-	printf("\nalive: %d\nnbr_live: %u\ncycles_without_check: %u\ncycles_to_die: %u\nnbr_check: %u\n", crwr->arena->alive, crwr->arena->nbr_live, crwr->arena->cycles_without_check, crwr->arena->cycles_to_die, crwr->arena->nbr_check);
+	dprintf(fd, "\n");
+	close(fd);
+//	printf("\nalive: %d\nnbr_live: %u\ncycles_without_check: %u\ncycles_to_die: %u\nnbr_check: %u\n", crwr->arena->alive, crwr->arena->nbr_live, crwr->arena->cycles_without_check, crwr->arena->cycles_to_die, crwr->arena->nbr_check);
 }
 
 int        ft_error(char *line, int i)

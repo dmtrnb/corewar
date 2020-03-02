@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:39:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 19:10:50 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/01 19:33:45 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		main(int ac, char **av)
 	(crwr->opt & 0x80 ? NULL : say_buy(crwr));
 //	pri(crwr->cursor);
 //	pr(crwr);
-//	printf("END CYCLES: %u\n", crwr->arena->cycles);
+	printf("END CYCLES: %u\n", crwr->arena->cycles);
 //	free_crwr(&crwr);
 //	free_cursor(&cursor);
 	return (0);

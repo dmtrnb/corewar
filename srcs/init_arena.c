@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:06:41 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 16:33:16 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/02 14:22:53 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cursor	*fill_arena(t_crwr *crwr)
 {
 	unsigned		i;
 	unsigned		j;
-	unsigned char	num_code;
+//	unsigned char	num_code;
 	int				count;
 	t_players		*temp;
 	t_cursor		*cursor;
@@ -36,8 +36,8 @@ t_cursor	*fill_arena(t_crwr *crwr)
 			j++;
 		}
 		ft_cursor_add(&cursor, ft_cursor_new(temp->id, count));
-		num_code = *((unsigned char *)crwr->arena->field + cursor->pc) - 1;
-		cursor->wait = (num_code < 0x10 ? g_op_tab[num_code].wait - 1 : 0);
+		cursor->nc = *((unsigned char *)crwr->arena->field + cursor->pc) - 1;
+		cursor->wait = (cursor->nc < 0x10 ? g_op_tab[cursor->nc].wait - 1 : 0);
 		temp = temp->next;
 		i += MEM_SIZE / count;
 	}

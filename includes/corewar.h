@@ -67,6 +67,7 @@ typedef struct		s_arena	{
 typedef struct		s_cursor	{
     unsigned		id;
 	unsigned		pc;
+	unsigned char	nc;
 	int				registrs[REG_NUMBER];
 	unsigned 		last_live;
 	unsigned		wait;

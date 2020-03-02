@@ -17,8 +17,6 @@ t_cursor	*ft_cursor_del(t_cursor **cursor, t_cursor **temp)
 	t_cursor	*del;
 	t_cursor	*ret;
 
-	if ((*temp)->pc > MEM_SIZE)
-		printf("del_id: %u\n", (*temp)->id & 0x7ffffff);
 	if (cursor && *cursor && *cursor == *temp)
 	{
 		if ((*cursor)->next)
@@ -50,7 +48,8 @@ t_cursor	*ft_cursor_new(unsigned id, unsigned count_pl)
 	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
 		ft_error("Problem with malloc for carriage", -1);
 	new->id = id << 27;
-	new->id |= count_pl - id + 1;
+    new->id |= id;
+    //    new->id |= count_pl - id + 1;
 	new->pc = looped((MEM_SIZE / count_pl) * (id - 1), 0);
 	new->last_live = 0;
 	new->wait = -1;
