@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 12:53:10 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 16:06:04 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/02 15:41:58 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			or(t_crwr *crwr, t_cursor *temp)
 	pc = get_pc_and_num(&num1, field, temp, pc);
 	pc = get_pc_and_num(&num2, field, temp, pc);
 	*(temp->registrs + *(field + pc) - 1) = num1 | num2;
-	temp->id = (num1 & num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
+	temp->id = (num1 | num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
 
 void			xor(t_crwr *crwr, t_cursor *temp)
@@ -73,5 +73,5 @@ void			xor(t_crwr *crwr, t_cursor *temp)
 	pc = get_pc_and_num(&num1, field, temp, pc);
 	pc = get_pc_and_num(&num2, field, temp, pc);
 	*(temp->registrs + *(field + pc) - 1) = num1 ^ num2;
-	temp->id = (num1 & num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
+	temp->id = (num1 ^ num2 ? temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
