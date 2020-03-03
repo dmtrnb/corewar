@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:28:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/03 16:30:35 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/03 17:37:25 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,13 @@ void			cycle(t_crwr *crwr)
 		{
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
 			{
-				if (crwr->opt & 0x80)
+//				if (crwr->opt & 0x80)
+				if (crwr->opt & 0x80 && crwr->arena->cycles > 9165)
 //					bebug(crwr->arena, temp, num);
 					debug(crwr->arena, temp, num);
 				g_op_tab[num].func(crwr, temp);
-				if (crwr->opt & 0x80)
+				if (crwr->opt & 0x80 && crwr->arena->cycles > 9165)
+//				if (crwr->opt & 0x80)
 					debug(crwr->arena, temp, num);
 			}
 			if (num == 8 && temp->id & 0x80000000)
