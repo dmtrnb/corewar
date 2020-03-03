@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:28:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/02 16:00:08 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/03 16:30:35 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 	}
 	else
 		correct = 0;
-	temp->nc = *(field + looped(temp->pc, *step)) - 1;
-	temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
+//	temp->nc = *(field + looped(temp->pc, *step)) - 1;
+//	temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
+//	if (cyc == 1075 && ((temp->id & 0x7ffffff) == 4))
+//		printf("%u %u %u\n", temp->nc, temp->wait, *step);
 	return (correct);
 }
 
@@ -94,6 +96,8 @@ void			cycle(t_crwr *crwr)
 	unsigned char	step;
 	unsigned char	num;
 
+//	if (crwr->opt & 0x80)
+//		printf("It is now cycle %u\n", crwr->arena->cycles);
 	temp = crwr->cursor;
 	while (temp)
 	{
@@ -102,24 +106,25 @@ void			cycle(t_crwr *crwr)
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
 			{
 				if (crwr->opt & 0x80)
-				{
-//					pr(crwr);
+//					bebug(crwr->arena, temp, num);
 					debug(crwr->arena, temp, num);
-				}
 				g_op_tab[num].func(crwr, temp);
 				if (crwr->opt & 0x80)
-				{
-//					pr(crwr);
 					debug(crwr->arena, temp, num);
-				}
 			}
 			if (num == 8 && temp->id & 0x80000000)
-			{
 				step = 0;
-				temp->nc = *((unsigned char *)crwr->arena->field + temp->pc) - 1;
-				temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
-			}
 			temp->pc = looped(temp->pc, step);
+		}
+		temp = temp->next;
+	}
+	temp = crwr->cursor;
+	while (temp)
+	{
+		if (!temp->wait)
+		{
+			temp->nc = *((unsigned char *)crwr->arena->field + temp->pc) - 1;
+			temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
 		}
 		else
 			temp->wait--;

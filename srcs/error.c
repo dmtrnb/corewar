@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:28:27 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/02 12:15:12 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/03 14:54:03 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void    pr(t_crwr *crwr)
 int        ft_error(char *line, int i)
 {
     printf(ANSI_COLOR_RED"%s"ANSI_COLOR_RESET"\n", line);    //ft_putstr(line);
-    exit(i);
+    exit(i == -1 ? i : -1);
 }
 
 //void    free_all(t_crwr **crwr)
