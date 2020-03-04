@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 14:46:23 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/03 18:19:07 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 12:29:22 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	cfork(t_crwr *crwr, t_cursor *temp)
 //		printf("FORK ID: %u %u\n", crwr->cursor->id & 0x7ffffff, crwr->arena->cycles);
 //	crwr->cursor->nc = *((unsigned char *)crwr->arena->field + crwr->cursor->pc) - 1;
 //	crwr->cursor->wait = (crwr->cursor->nc < 0x10 ? g_op_tab[crwr->cursor->nc].wait - 1 : 0);
-	crwr->cursor->wait = 0;
+//	crwr->cursor->wait = 0;
 //	printf("%u %u %u %u %d %d\n", crwr->cursor->pc, crwr->cursor->nc, crwr->cursor->wait, crwr->cursor->id & 0x7ffffff, num, num % IDX_MOD);
 }
 
@@ -36,6 +36,6 @@ void	lfork(t_crwr *crwr, t_cursor *temp)
 //		printf("lFORK ID: %u %u\n", crwr->cursor->id & 0x7ffffff, crwr->arena->cycles);
 //	crwr->cursor->nc = *((unsigned char *)crwr->arena->field + crwr->cursor->pc) - 1;
 //	crwr->cursor->wait = (crwr->cursor->nc < 0x10 ? g_op_tab[crwr->cursor->nc].wait - 1: 0);
-	crwr->cursor->wait = 0;
+//	crwr->cursor->wait = 0;
 //	printf("%u %u %u\n", crwr->cursor->nc, crwr->cursor->wait, crwr->cursor->id & 0x7ffffff);
 }

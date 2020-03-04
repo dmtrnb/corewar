@@ -70,7 +70,7 @@ typedef struct		s_cursor	{
 	unsigned char	nc;
 	int				registrs[REG_NUMBER];
 	unsigned 		last_live;
-	unsigned		wait;
+	int				wait;
 	struct s_cursor	*prev;
 	struct s_cursor	*next;
 }					t_cursor;

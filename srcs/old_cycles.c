@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:28:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 14:06:38 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 11:15:24 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 
 	correct = 1;
 	*step = 1;
+//	*num = *(field + temp->pc) - 1;
 	*num = temp->nc;
 	if (*num < 0x10)
 	{
@@ -83,6 +84,10 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 	}
 	else
 		correct = 0;
+//	temp->nc = *(field + looped(temp->pc, *step)) - 1;
+//	temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
+//	if (cyc == 1075 && ((temp->id & 0x7ffffff) == 4))
+//		printf("%u %u %u\n", temp->nc, temp->wait, *step);
 	return (correct);
 }
 
@@ -92,29 +97,50 @@ void			cycle(t_crwr *crwr)
 	unsigned char	step;
 	unsigned char	num;
 
+//	if (crwr->opt & 0x80)
+//		printf("It is now cycle %u\n", crwr->arena->cycles);
 	temp = crwr->cursor;
 	while (temp)
 	{
-		if (temp->wait == -1)
+/*		if (crwr->arena->cycles > 9172 && (temp->id & 0x7ffffff) == 24)
 		{
-			temp->nc = *((unsigned char *)crwr->arena->field + temp->pc) - 1;
-			temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
+			unsigned char *field = (unsigned char *)crwr->arena->field;
+            printf("nc: %u wait: %u temp->pc: %u cycle: %u %02x%02x%02x%02x%02x\n", temp->nc, temp->wait, temp->pc, crwr->arena->cycles, *(field + looped(temp->pc, 0)), *(field + looped(temp->pc, 1)), *(field + looped(temp->pc, 2)), *(field + looped(temp->pc, 3)), *(field + looped(temp->pc, 4)));
 		}
-		if (!temp->wait)
+*/		if (!temp->wait)
 		{
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
 			{
-				if (crwr->opt & 0x80 && crwr->arena->cycles > 15700 && ((temp->id &0x7ffffff) == 227 || (temp->id &0x7ffffff) == 190))
+				if (crwr->opt & 0x80)
+//				if (crwr->opt & 0x80 && crwr->arena->cycles > 9170)
+//				if (crwr->opt & 0x80 && crwr->arena->cycles > 9170 && (temp->id & 0x7ffffff) == 24)
+				{
+//					bebug(crwr->arena, temp, num);
 					debug(crwr->arena, temp, num);
+				}
 				g_op_tab[num].func(crwr, temp);
-				if (crwr->opt & 0x80 && crwr->arena->cycles > 15700 && ((temp->id &0x7ffffff) == 227 || (temp->id & 0x7ffffff) == 190))
+				if (crwr->opt & 0x80)
+//				if (crwr->opt & 0x80 && crwr->arena->cycles > 9170)
+//				if (crwr->opt & 0x80 && crwr->arena->cycles > 9170 && (temp->id & 0x7ffffff) == 24)
+				{
 					debug(crwr->arena, temp, num);
+				}
 			}
 			if (temp->nc == 8 && temp->id & 0x80000000)
 				step = 0;
 			temp->pc = looped(temp->pc, step);
 		}
-//		else
+		temp = temp->next;
+	}
+	temp = crwr->cursor;
+	while (temp)
+	{
+		if (!temp->wait)
+		{
+			temp->nc = *((unsigned char *)crwr->arena->field + temp->pc) - 1;
+			temp->wait = (temp->nc < 0x10 ? g_op_tab[temp->nc].wait - 1 : 0);
+		}
+		else
 			temp->wait--;
 		temp = temp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:21:18 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 17:59:28 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 12:35:53 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_cursor	*ft_cursor_new(unsigned id, unsigned count_pl)
 	new->pc = looped((MEM_SIZE / count_pl) * (id - 1), 0);
 	new->last_live = 0;
 	new->wait = -1;
+//	new->wait = 0;
 	*(new->registrs) = ~(id - 1);
 	i = 0;
 	while (i++ < REG_NUMBER)
@@ -73,6 +74,9 @@ t_cursor	*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id)
 		ft_error("Problem with malloc for carriage", -1);
 	new->id = (id & 0x7ffffff) | (temp->id & 0xf8000000);
 	new->pc = pc;
+
+	new->wait = -1;
+
 	i = 0;
 	while (i != REG_NUMBER)
 	{

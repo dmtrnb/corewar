@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:28:27 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/03 14:54:03 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/03 19:36:21 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void    pr(t_crwr *crwr)
         i++;
     }
 */
-	int fd = open("0", O_WRONLY | O_CREAT);
+	int fd = open("0", O_RDWR | O_CREAT | O_TRUNC);
 	t_cursor    *cursor = crwr->cursor;
     while (cursor)
     {

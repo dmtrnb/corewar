@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 17:02:56 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/03 16:30:57 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 14:07:09 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,12 @@ static void	check(t_arena *arena, t_cursor **cursor)
 	unsigned ct = 0;
 	unsigned count = 0;
 	
-	arena->nbr_check++;
-	if (arena->nbr_live >= NBR_LIVE || arena->nbr_check >= MAX_CHECKS)
-	{
-		arena->cycles_to_die -= CYCLE_DELTA;
-		arena->nbr_check = 0;
-	}
-	arena->nbr_live = 0;
-	arena->cycles_without_check = 0;
 	temp = *cursor;
 	while (temp)
 	{
 		ct++;
 //		if (arena->cycles - temp->last_live >= (unsigned)arena->cycles_to_die)
-//			printf("cursor died\n");
+//			printf("cursor %u died\n", temp->id & 0x7ffffff);
 		temp = (arena->cycles - temp->last_live >= (unsigned)arena->cycles_to_die ? \
 				ft_cursor_del(cursor, &temp) : temp->next);
 	}
@@ -43,6 +35,14 @@ static void	check(t_arena *arena, t_cursor **cursor)
 		count++;
 		temp = temp->next;
 	}
+	arena->nbr_check++;
+	if (arena->nbr_live >= NBR_LIVE || arena->nbr_check >= MAX_CHECKS)
+	{
+		arena->cycles_to_die -= CYCLE_DELTA;
+		arena->nbr_check = 0;
+	}
+	arena->nbr_live = 0;
+	arena->cycles_without_check = 0;
 	printf("CYCLES: %u (%u->%u) --- COUNT: %u->%u\n", arena->cycles, wo, arena->cycles_to_die, ct, count);
 }
 
