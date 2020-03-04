@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:39:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/03 15:08:07 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:43:17 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ static void	say_hello(t_name *name)
 {
 	unsigned	i;
 	t_name		*temp;
-    
-    printf("Introducing contestants...\n");    //    FT
+
+	printf("Introducing contestants...\n");
 	i = 0;
-    temp = name;
-    while (temp)
-    {
+	temp = name;
+	while (temp)
+	{
 		i++;
-        printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n", i, temp->code_size, temp->name, temp->comment);    //    FT
-        temp = temp->next;
-    }
+		printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n", \
+								i, temp->code_size, temp->name, temp->comment);
+		temp = temp->next;
+	}
 }
 
 static void	say_buy(t_crwr *crwr)
@@ -60,7 +61,7 @@ static void	say_buy(t_crwr *crwr)
 	}
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_crwr		*crwr;
 
@@ -72,10 +73,5 @@ int		main(int ac, char **av)
 	(crwr->opt & 0x80 ? NULL : say_hello(crwr->name));
 	arena(crwr, crwr->arena);
 	(crwr->opt & 0x80 ? NULL : say_buy(crwr));
-//	pri(crwr->cursor);
-//	pr(crwr);
-	printf("END CYCLES: %u\n", crwr->arena->cycles);
-//	free_crwr(&crwr);
-//	free_cursor(&cursor);
 	return (0);
 }

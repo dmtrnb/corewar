@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:09:30 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/01 19:17:09 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:40:51 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,3 @@ void		live(t_crwr *crwr, t_cursor *temp)
 	if (player_exists(crwr->name, num))
 		crwr->arena->alive = num;
 }
-/*
-	int		attrs;
-		if (crwr->visu)
-		{
-			*((unsigned char *)crwr->arena->par_field + temp->pc) &= 0x1f;
-			*((unsigned char *)crwr->arena->par_field + temp->pc) |= 0x40;
-			attrs = get_arena_attr(*((unsigned char *)crwr->arena->par_field + temp->pc));
-			attrset(attrs);
-//			attrset(COLOR_PAIR(MAX_PLAYERS + (~num + 1)));
-			mvprintw(temp->pc / COLUMNS + 2, (temp->pc % COLUMNS) * 3 + 3, "%02x", *((unsigned char *)crwr->arena->field + temp->pc));
-			need_add_visu(&(crwr->arena), temp->pc, 1);
-		}
-*/

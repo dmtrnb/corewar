@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 05:15:07 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/29 15:51:30 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:37:59 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ unsigned	looped(int num1, int num2)
 		return ((num1 + num2) % MEM_SIZE);
 }
 
-int		get_direct(void *arena, unsigned pc, char size_four)
+int			get_direct(void *arena, unsigned pc, char size_four)
 {
 	int		num;
 
@@ -42,7 +42,7 @@ int		get_direct(void *arena, unsigned pc, char size_four)
 	return (num);
 }
 
-int		get_indirect(void *arena, unsigned pc, unsigned cur_pc)
+int			get_indirect(void *arena, unsigned pc, unsigned cur_pc)
 {
 	int	num;
 

@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 22:10:35 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 22:23:27 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:49:08 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ void	sti(t_crwr *crwr, t_cursor *temp)
 	else
 		adr = get_direct(field, looped(temp->pc, 3), 0);
 	off = 3 + (!(arg & 0x20) && arg & 0x10 ? 1 : 2);
-	if (arg & 0x04)
-		adr += *(temp->registrs + *(field + looped(temp->pc, off)) - 1);
-	else
-		adr += get_direct(field, looped(temp->pc, off), 0);
+	adr += (arg & 0x04 ? *(temp->registrs + *(field + looped(temp->pc, off)) \
+							- 1) : get_direct(field, looped(temp->pc, off), 0));
 	adr = adr % IDX_MOD;
 	off = *(field + looped(temp->pc, 2)) - 1;
 	num = *(temp->registrs + off);

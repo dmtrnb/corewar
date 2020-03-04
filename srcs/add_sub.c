@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 12:44:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 13:38:57 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:27:02 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ void	sub(t_crwr *crwr, t_cursor *temp)
 	temp->id = (*(temp->registrs + r3) ? \
 							temp->id & 0x7fffffff : temp->id | 0x80000000);
 }
-

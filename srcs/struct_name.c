@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:40:20 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/27 20:48:01 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:50:46 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ t_name			*free_players(t_crwr **crwr)
 	{
 		players = (*crwr)->players;
 		(*crwr)->players = (*crwr)->players->next;
-		ft_name_add_last(&name, ft_name_new(players->name, players->comment, players->code_size));
+		ft_name_add_last(&name, ft_name_new(players->name, players->comment, \
+														players->code_size));
 		free(players->filename);
 		free(players->code);
 		free(players);

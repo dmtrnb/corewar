@@ -6,20 +6,22 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:28:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 14:06:38 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:32:22 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-char			correct_reg(unsigned char *field, t_cursor *temp, unsigned char num, unsigned char arg)
+char			correct_reg(unsigned char *field, t_cursor *temp, \
+										unsigned char num, unsigned char arg)
 {
 	unsigned		i;
 	unsigned		pc;
 	unsigned char	code;
 
-    i = 0;
-	pc = (g_op_tab[num].args_exists ? looped(temp->pc, 2) : looped(temp->pc, 1));
+	i = 0;
+	pc = (g_op_tab[num].args_exists ? looped(temp->pc, 2) : \
+														looped(temp->pc, 1));
 	while (i < g_op_tab[num].args)
 	{
 		code = (arg >> (6 - i * 2)) & 0x03;
@@ -30,7 +32,8 @@ char			correct_reg(unsigned char *field, t_cursor *temp, unsigned char num, unsi
 			pc = looped(pc, 1);
 		}
 		else if (code == DIR_CODE)
-			pc = (g_op_tab[num].dir_is_four ? looped(pc, 2) : looped(pc, DIR_SIZE));
+			pc = (g_op_tab[num].dir_is_four ? looped(pc, 2) : \
+														looped(pc, DIR_SIZE));
 		else if (code == IND_CODE)
 			pc = looped(pc, IND_SIZE);
 		i++;
@@ -67,7 +70,8 @@ static unsigned	steps(unsigned char num, unsigned char arg, char *correct)
 	return (count);
 }
 
-static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, unsigned char *num)
+static char		correct(unsigned char *field, t_cursor *temp, \
+										unsigned char *step, unsigned char *num)
 {
 	char			correct;
 	unsigned char	arg;
@@ -77,8 +81,10 @@ static char		correct(unsigned char *field, t_cursor *temp, unsigned char *step, 
 	*num = temp->nc;
 	if (*num < 0x10)
 	{
-		arg = (g_op_tab[*num].args_exists ? *(field + looped(temp->pc, 1)) : 0x80);
-		*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? 2 : 1);
+		arg = (g_op_tab[*num].args_exists ? \
+										*(field + looped(temp->pc, 1)) : 0x80);
+		*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? \
+																		2 : 1);
 		correct = (correct ? correct_reg(field, temp, *num, arg) : 0);
 	}
 	else
@@ -104,18 +110,17 @@ void			cycle(t_crwr *crwr)
 		{
 			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
 			{
-				if (crwr->opt & 0x80 && crwr->arena->cycles > 15700 && ((temp->id &0x7ffffff) == 227 || (temp->id &0x7ffffff) == 190))
+				if (crwr->opt & 0x80)
 					debug(crwr->arena, temp, num);
 				g_op_tab[num].func(crwr, temp);
-				if (crwr->opt & 0x80 && crwr->arena->cycles > 15700 && ((temp->id &0x7ffffff) == 227 || (temp->id & 0x7ffffff) == 190))
+				if (crwr->opt & 0x80)
 					debug(crwr->arena, temp, num);
 			}
 			if (temp->nc == 8 && temp->id & 0x80000000)
 				step = 0;
 			temp->pc = looped(temp->pc, step);
 		}
-//		else
-			temp->wait--;
+		temp->wait--;
 		temp = temp->next;
 	}
 }

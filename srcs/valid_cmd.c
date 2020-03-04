@@ -6,41 +6,41 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 14:01:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 14:01:55 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:52:24 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int				ft_is_int(char *str)
+int					ft_is_int(char *str)
 {
 	size_t	i;
 
 	i = 0;
 	if (!str)
 		return (-1);
-	while (*(str + i) && isdigit(*(str + i)))	// FT
+	while (*(str + i) && isdigit(*(str + i)))
 		i++;
 	if (*(str + i))
 		return (-1);
-	return (atoi(str));	// FT
+	return (atoi(str));
 }
 
-static int		count_players(int ac, char **av, int i)
+static int			count_players(int ac, char **av, int i)
 {
 	int	count;
 
 	count = 0;
 	while (i < ac)
-		if (!strcmp(*(av + i), OPT_N))	// FT
+		if (!strcmp(*(av + i), OPT_N))
 		{
 			i += 2;
-			if (i >= ac || !strcmp(*(av + i), OPT_N))	// FT
+			if (i >= ac || !strcmp(*(av + i), OPT_N))
 				ft_error("Wrong number of parameters", -1);
 		}
-		else if (!strcmp(*(av + i), OPT_V))	// FT
+		else if (!strcmp(*(av + i), OPT_V))
 			i++;
-		else if (!strcmp(*(av + i), OPT_A))	// FT
+		else if (!strcmp(*(av + i), OPT_A))
 			i++;
 		else
 		{
@@ -50,7 +50,7 @@ static int		count_players(int ac, char **av, int i)
 	return (count);
 }
 
-static void		ft_players_add_last(t_players **alst, t_players *new)
+static void			ft_players_add_last(t_players **alst, t_players *new)
 {
 	t_players	*tmp;
 
@@ -102,12 +102,12 @@ void				valid_command(int ac, char **av, t_crwr **crwr)
 	(*crwr)->opt = 0;
 	i = 0;
 	while (++i != ac)
-		(*crwr)->opt |= (strcmp(*(av + i), OPT_V) ? 0 : 0x80);	// FT
+		(*crwr)->opt |= (strcmp(*(av + i), OPT_V) ? 0 : 0x80);
 	i = 0;
 	while (++i != ac)
-		(*crwr)->opt |= (strcmp(*(av + i), OPT_A) ? 0 : 0x08);	// FT
+		(*crwr)->opt |= (strcmp(*(av + i), OPT_A) ? 0 : 0x08);
 	i = 1;
-	if (!strcmp(*(av + 1), OPT_DUMP))	// FT
+	if (!strcmp(*(av + 1), OPT_DUMP))
 	{
 		if (ac <= 2 || ((*crwr)->nbr_cycles = ft_is_int(*(av + 2))) < 0)
 			ft_error("Wrong cycle number", -1);

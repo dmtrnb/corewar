@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:13:19 by nhamill           #+#    #+#             */
-/*   Updated: 2020/02/28 14:05:30 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:53:40 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	check_code_size(int fd, unsigned char *buf, t_players *players)
 	unsigned	size;
 
 	size = 0;
-	bzero(buf, 4);	// FT
+	bzero(buf, 4);
 	if (read(fd, buf, SIZE_MAGIC_NULL) < SIZE_MAGIC_NULL)
 		ft_error("File unexpectedly ended while reading size of a champion ", -3);
 	size += *(buf + 3);
@@ -36,8 +36,8 @@ static void	check_code_size(int fd, unsigned char *buf, t_players *players)
 	size += *(buf + 0) << 24;
 	if (size > CHAMP_MAX_SIZE)
 	{
-		printf("Слишком большой код для чемпиона %s from %s (%u bytes vs. %u bytes)\n", players->name, players->filename, size, CHAMP_MAX_SIZE); //FT
-		exit(-3);	// FT
+		printf("Слишком большой код для чемпиона %s from %s (%u bytes vs. %u bytes)\n", players->name, players->filename, size, CHAMP_MAX_SIZE);
+		exit(-3);
 	}
 	players->code_size = size;
 }
@@ -50,13 +50,13 @@ static void	check_name_or_comment(int fd, t_players *players, char isname)
 	len = (isname ? PROG_NAME_LENGTH : COMMENT_LENGTH);
 	if (!((buf = (char *)malloc(sizeof(char) * (len + 1)))))
 		ft_error("Problem with malloc for buffer for name/comment of champ", -3);
-	bzero(buf, len + 1); // FT
+	bzero(buf, len + 1);
 	if (read(fd, buf, len) < (int)len)
 		ft_error("Unexpected end of file while reading name/comment of champ", -3);
 	if (isname)
-		players->name = strdup(buf);	// FT
+		players->name = strdup(buf);
 	else
-		players->comment = strdup(buf);	// FT
+		players->comment = strdup(buf);
 	if (!players->name && !players->comment)
 		ft_error("Problem with malloc for name/comment of champ", -3);
 	free(buf);
@@ -66,7 +66,7 @@ static void	check_magic_or_null(int fd, unsigned char *buf, char ismagic)
 {
 	unsigned	magic_num;
 
-	bzero(buf, 4);	// FT
+	bzero(buf, 4);
 	magic_num = 0;
 	if (read(fd, buf, SIZE_MAGIC_NULL) < SIZE_MAGIC_NULL)
 		ft_error("Unexpected end of file while reading MAGIC HEADER or NULL", -3);
