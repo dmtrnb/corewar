@@ -6,13 +6,13 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:28:59 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 15:32:22 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/06 12:05:50 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-char			correct_reg(unsigned char *field, t_cursor *temp, \
+static char		correct_reg(unsigned char *field, t_cursor *temp, \
 										unsigned char num, unsigned char arg)
 {
 	unsigned		i;
@@ -70,22 +70,20 @@ static unsigned	steps(unsigned char num, unsigned char arg, char *correct)
 	return (count);
 }
 
-static char		correct(unsigned char *field, t_cursor *temp, \
-										unsigned char *step, unsigned char *num)
+static char		correct(unsigned char *field, t_cursor *temp)
 {
 	char			correct;
 	unsigned char	arg;
 
 	correct = 1;
-	*step = 1;
-	*num = temp->nc;
-	if (*num < 0x10)
+	temp->step = 1;
+	if (temp->nc < 0x10)
 	{
-		arg = (g_op_tab[*num].args_exists ? \
+		arg = (g_op_tab[temp->nc].args_exists ? \
 										*(field + looped(temp->pc, 1)) : 0x80);
-		*step = steps(*num, arg, &correct) + (g_op_tab[*num].args_exists ? \
-																		2 : 1);
-		correct = (correct ? correct_reg(field, temp, *num, arg) : 0);
+		temp->step = steps(temp->nc, arg, &correct) + \
+									(g_op_tab[temp->nc].args_exists ? 2 : 1);
+		correct = (correct ? correct_reg(field, temp, temp->nc, arg) : 0);
 	}
 	else
 		correct = 0;
@@ -95,8 +93,6 @@ static char		correct(unsigned char *field, t_cursor *temp, \
 void			cycle(t_crwr *crwr)
 {
 	t_cursor		*temp;
-	unsigned char	step;
-	unsigned char	num;
 
 	temp = crwr->cursor;
 	while (temp)
@@ -108,17 +104,14 @@ void			cycle(t_crwr *crwr)
 		}
 		if (!temp->wait)
 		{
-			if (correct((unsigned char *)crwr->arena->field, temp, &step, &num))
+			if (correct((unsigned char *)crwr->arena->field, temp))
 			{
-				if (crwr->opt & 0x80)
-					debug(crwr->arena, temp, num);
-				g_op_tab[num].func(crwr, temp);
-				if (crwr->opt & 0x80)
-					debug(crwr->arena, temp, num);
+				(crwr->opt & 0x40 ? debug(crwr->arena, temp, temp->nc) : NULL);
+				g_op_tab[temp->nc].func(crwr, temp);
+				(crwr->opt & 0x40 ? debug(crwr->arena, temp, temp->nc) : NULL);
 			}
-			if (temp->nc == 8 && temp->id & 0x80000000)
-				step = 0;
-			temp->pc = looped(temp->pc, step);
+			temp->step = (temp->nc == 8 && temp->id & 0x80000000 ? 0 : temp->step);		
+			temp->pc = looped(temp->pc, temp->step);
 		}
 		temp->wait--;
 		temp = temp->next;

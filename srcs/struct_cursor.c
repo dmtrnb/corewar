@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:21:18 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 15:50:20 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:28:50 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_cursor	*ft_cursor_new(unsigned id, unsigned count_pl)
 	new->id |= id;
 	new->pc = looped((MEM_SIZE / count_pl) * (id - 1), 0);
 	new->last_live = 0;
+	new->nc = 255;
 	new->wait = -1;
 	*(new->registrs) = ~(id - 1);
 	i = 0;

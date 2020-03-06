@@ -6,11 +6,23 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 22:10:35 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 15:49:08 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/06 14:26:51 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+static void	visu_st(unsigned char *par_field, unsigned pc, unsigned pid)
+{
+	*(par_field + pc) &= 0xf0;
+	*(par_field + looped(pc, 1)) &= 0xf0;
+	*(par_field + looped(pc, 2)) &= 0xf0;
+	*(par_field + looped(pc, 3)) &= 0xf0;
+	*(par_field + pc) |= 0x01 << ((pid - 1) % MAX_COLOR_PL);
+	*(par_field + looped(pc, 1)) |= 0x01 << ((pid - 1) % MAX_COLOR_PL);
+	*(par_field + looped(pc, 2)) |= 0x01 << ((pid - 1) % MAX_COLOR_PL);
+	*(par_field + looped(pc, 3)) |= 0x01 << ((pid - 1) % MAX_COLOR_PL);
+}
 
 void	st(t_crwr *crwr, t_cursor *temp)
 {
@@ -31,6 +43,7 @@ void	st(t_crwr *crwr, t_cursor *temp)
 		*(field + looped(temp->pc, adr + 1)) = (num >> 16) & 0xff;
 		*(field + looped(temp->pc, adr + 2)) = (num >> 8) & 0xff;
 		*(field + looped(temp->pc, adr + 3)) = num & 0xff;
+		(crwr->opt & 0x80 ? visu_st((unsigned char *)crwr->arena->par_field, looped(temp->pc, adr), (temp->id >> 27) & 0xf) : NULL);
 	}
 	else
 	{
@@ -65,4 +78,5 @@ void	sti(t_crwr *crwr, t_cursor *temp)
 	*(field + looped(temp->pc, adr + 1)) = (num >> 16) & 0xff;
 	*(field + looped(temp->pc, adr + 2)) = (num >> 8) & 0xff;
 	*(field + looped(temp->pc, adr + 3)) = num & 0xff;
+	(crwr->opt & 0x80 ? visu_st((unsigned char *)crwr->arena->par_field, looped(temp->pc, adr), (temp->id >> 27) & 0xf) : NULL);
 }

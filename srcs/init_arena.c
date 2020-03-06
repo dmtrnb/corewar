@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 16:06:41 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 15:40:16 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/06 14:32:48 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ t_cursor	*fill_arena(t_crwr *crwr)
 		{
 			*((unsigned char *)crwr->arena->field + i + j) = \
 								*((unsigned char *)temp->code + j);
-			*((unsigned char *)crwr->arena->par_field + i + j) = \
-					(0x01 << ((temp->id - 1) % MAX_COLOR_PL)) + (j ? 0 : 0x10);
+			*((unsigned char *)crwr->arena->par_field + i + j) = (0x01 << (temp->id - 1) % MAX_COLOR_PL) + (j ? 0 : 0x10);
 			j++;
 		}
 		ft_cursor_add(&cursor, ft_cursor_new(temp->id, count));

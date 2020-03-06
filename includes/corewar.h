@@ -29,10 +29,16 @@
 # define ANSI_COLOR_RESET   "\x1b[0m"
 
 typedef struct		s_visu	{
-    char			count;
-    char            cycle;
-	unsigned		pc;
-	struct s_visu	*next;
+	unsigned char	cond;
+	WINDOW			*arena;
+	WINDOW			*cycles;
+	WINDOW			*lives;
+	WINDOW			*procces;
+	unsigned char	size;
+    unsigned        cursor;
+    unsigned        count;
+    unsigned char    mem_part;
+    unsigned char    mem_parts;
 }					t_visu;
 
 typedef struct		s_name	{
@@ -57,7 +63,7 @@ typedef struct		s_arena	{
     unsigned        nbr_live;
 	unsigned   		cycles;
     unsigned		cycles_without_check;
-	int		cycles_to_die;
+	int				cycles_to_die;
 	unsigned		nbr_check;
     void            *field;
     void            *par_field;
@@ -67,9 +73,10 @@ typedef struct		s_arena	{
 typedef struct		s_cursor	{
     unsigned		id;
 	unsigned		pc;
-	unsigned char	nc;
+	unsigned char	step;
 	int				registrs[REG_NUMBER];
 	unsigned 		last_live;
+	unsigned		nc;
 	int				wait;
 	struct s_cursor	*prev;
 	struct s_cursor	*next;
@@ -113,9 +120,7 @@ t_arena				*init_arena(char alive);
 
 t_cursor			*ft_cursor_new(unsigned id, unsigned count_pl);
 t_cursor			*ft_cursor_fork(t_cursor *temp, unsigned pc, unsigned id);
-//t_cursor			*ft_cursor_del(t_cursor *cursor, t_cursor *temp);
 t_cursor			*ft_cursor_del(t_cursor **cursor, t_cursor **temp);
-//t_cursor			*ft_cursor_del(t_cursor **cursor);
 void				ft_cursor_add(t_cursor **cursor, t_cursor *new);
 
 unsigned			looped(int num1, int num2);
@@ -147,9 +152,14 @@ void				lldi(t_crwr *crwr, t_cursor *temp);
 void				pr(t_crwr *crwr);
 void				pri(t_cursor *cursor);
 
+t_visu				*get_visu(t_crwr *crwr);
+unsigned			get_arena_pair(unsigned char ch);
+unsigned			get_arena_attr(unsigned char ch);
+unsigned			count_of_cursor(t_cursor *cursor);
+void				get_key(t_visu *visu);
+void				draw_box(unsigned line, unsigned column, unsigned y, unsigned x);
+void				visu_arena(t_crwr *crwr, t_arena *arena, t_visu *visu);
 
-
-void                debug(t_arena *arena, t_cursor *temp, unsigned num);
 #define A1 "Cycles:       "
 #define A2 "Alive:        "
 #define A3 "nbr_live:     "
@@ -170,3 +180,37 @@ void                debug(t_arena *arena, t_cursor *temp, unsigned num);
 #define A25 "IND"
 #define A26 " | "
 #define A27 "Action:       "
+#define A30 "Press enter to continue ↵\n"
+
+typedef struct		s_debug	{
+	int				num;
+	int				num1;
+	int				num2;
+	unsigned		pc;
+	unsigned char	arg;
+	unsigned char	reg;
+	unsigned char	*field;
+}					t_debug;
+
+void				debug(t_arena *arena, t_cursor *temp, unsigned num);
+void				debug_action(t_cursor *temp, unsigned num, t_debug *deb);
+void				debug10(t_cursor *temp, t_debug *deb);
+int					debug10_num1(t_cursor *temp, t_debug *deb, int num);
+int					debug10_num2(t_cursor *temp, t_debug *deb, int num, int num1);
+void				debug_567(t_cursor *temp, t_debug *deb);
+int					debug_80_40(t_cursor *temp, char *s, t_debug *deb);
+int					debug_20_10(t_cursor *temp, t_debug *deb);
+int					debug_idx_mod(t_cursor *temp, t_debug *deb);
+void				debug_reg(t_cursor *temp, char c, t_debug *deb);
+int					debug_80_40_pc(t_cursor *temp, t_debug *deb);
+void				debug_9_13(t_cursor *temp, t_debug *deb);
+void				debug_1(t_cursor *temp, t_debug *deb);
+void				debug_2(t_cursor *temp, t_debug *deb);
+void				debug_12(t_cursor *temp, t_debug *deb);
+void				debug_8(t_cursor *temp, t_debug *deb);
+void				debug_general_info(t_arena *arena, t_cursor *temp, unsigned num);
+void				debug_arg(unsigned char arg, unsigned pc, unsigned num);
+void				debug_arg2(unsigned char code, unsigned num, unsigned *pc);
+void				debug_arg_value(unsigned char arg, unsigned pc, unsigned num, t_arena *arena);
+void				debug_arg_value2(unsigned char code, unsigned num, unsigned *pc, t_arena *arena);
+void				debug_11_14_15(t_cursor *temp, unsigned num, t_debug *deb);

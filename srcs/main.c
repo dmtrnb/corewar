@@ -6,7 +6,7 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:39:00 by nhamill           #+#    #+#             */
-/*   Updated: 2020/03/04 15:43:17 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/06 12:06:30 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ int			main(int ac, char **av)
 	crwr->arena = init_arena(crwr->players->id);
 	crwr->cursor = fill_arena(crwr);
 	crwr->name = free_players(&crwr);
+	crwr->arena->visu = (crwr->opt & 0x80 ? get_visu(crwr) : crwr->arena->visu);
 	(crwr->opt & 0x80 ? NULL : say_hello(crwr->name));
-	arena(crwr, crwr->arena);
+	(crwr->opt & 0x80 ? visu_arena(crwr, crwr->arena, crwr->arena->visu) : arena(crwr, crwr->arena));
 	(crwr->opt & 0x80 ? NULL : say_buy(crwr));
 	return (0);
 }
