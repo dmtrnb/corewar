@@ -14,15 +14,24 @@
 Цель игры - остаться последним живым игроком (да, для оповещения о своей живости есть отдельная команда).
 
 Запуск игры возможен в контейнере:
+
 $> docker-compose up
+
 Запуск битвы между двумя игроками в визуальном режиме:
+
 $> docker-compose exec corewar ./corewar -v players/cor/mise_a_jour_windows95.cor players/cor/zork.cor
+
 Дамп арены после 1000 и одного шага битвы:
+
 $> docker-compose exec corewar ./corewar -d 1001 players/cor/mise_a_jour_windows95.cor players/cor/zork.cor
+
 Usage программы:
+
 $> docker-compose exec corewar ./corewar
 
 
 Если есть смелость и установлены make, gcc и библиотека ncurses, можно играть и без контейнеров:
+
 $> make
+
 $> ./corewar -v players/cor/mise_a_jour_windows95.cor players/cor/zork.cor
