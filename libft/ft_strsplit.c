@@ -3,67 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dholiday <dholiday@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 22:16:52 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/13 15:27:15 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/08 21:52:18 by dholiday          #+#    #+#             */
+/*   Updated: 2020/03/07 19:25:16 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count(char const *s, char c)
+static void		del(char **s, int i)
 {
-	int		i;
-	size_t	num;
-
-	i = 0;
-	num = 0;
-	while (s[i] != '\0')
+	while (i >= 0)
 	{
-		if (s[i] != c && (s[i + 1] == '\0' || s[i + 1] == c))
-			num++;
-		i++;
+		free(s[i]);
+		i--;
 	}
-	return (num);
+	free(s);
 }
 
-static char		**back_ft_split(char const *s, char c, char **split)
+static int		slovo(char **s, char const *str, char c)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
-	while (*s != '\0')
+	k = 0;
+	while (str[i] != '\0')
 	{
-		while (*s == c && *s != '\0')
-			s++;
-		if (*s != '\0')
+		j = 0;
+		if (str[i] != c)
 		{
-			j = 0;
-			while (s[j] != c && s[j] != '\0')
+			while (str[i] != c && str[i++] != '\0')
 				j++;
-			if (!(split[i] = (char *)malloc(sizeof(char) * (j + 1))))
-				return (NULL);
-			j = 0;
-			while (*s != c && *s != '\0')
-				split[i][j++] = *(s++);
-			split[i][j] = '\0';
-			i++;
+			s[k] = (char*)malloc(sizeof(char) * (j + 1));
+			if (!(s[k]))
+			{
+				del(s, k);
+				return (0);
+			}
+			k++;
 		}
+		else
+			i++;
 	}
-	split[i] = NULL;
-	return (split);
+	return (1);
 }
 
-char			**ft_strsplit(char const *s, char c)
+static void		record(char **s, char const *str, char c)
 {
-	char	**split;
+	int	i;
+	int	k;
+	int	j;
 
-	if (s == NULL)
-		return ((char **)s);
-	if (!(split = (char **)malloc(sizeof(char *) * count(s, c) + 1)))
+	i = 0;
+	k = 0;
+	while (str[i] != '\0')
+	{
+		j = -1;
+		if (str[i] != c)
+		{
+			while (str[i] != c && str[i] != '\0')
+				s[k][++j] = str[i++];
+			s[k][++j] = '\0';
+			k++;
+		}
+		else
+			i++;
+	}
+	s[k] = 0;
+}
+
+char			**ft_strsplit(char const *str, char c)
+{
+	int		sum;
+	char	**s;
+
+	if (!(str))
 		return (NULL);
-	split = back_ft_split(s, c, split);
-	return (split);
+	sum = ft_sum_w(str, c);
+	s = (char**)malloc(sizeof(char *) * (sum + 1));
+	if (!(s))
+		return (NULL);
+	if (!(slovo(s, str, c)))
+		return (NULL);
+	record(s, str, c);
+	return (s);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/27 16:50:36 by nhamill           #+#    #+#             */
-/*   Updated: 2020/01/18 13:52:43 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/10 15:03:28 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/10 18:22:20 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	if (alst && (*alst) && del)
+	t_list	*new;
+	t_list	*buf;
+
+	if ((*alst) && del)
 	{
-		while (alst && (*alst))
+		new = *alst;
+		while (new->next != NULL)
 		{
-			(*del)((*alst)->data, (*alst)->size);
-			free((*alst));
-			(*alst) = (*alst)->next;
+			buf = new;
+			del(buf->content, buf->content_size);
+			new = new->next;
+			free(buf);
 		}
+		buf = new;
+		del(buf->content, buf->content_size);
+		free(buf);
 		*alst = NULL;
 	}
 }

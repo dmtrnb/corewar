@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 01:36:57 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/13 14:41:53 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/08 13:37:55 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/08 14:52:29 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
+	int		i;
+	int		j;
 	char	*str;
-	size_t	len;
 
-	if (!s1 || !s2)
+	i = 0;
+	j = 0;
+	if (!(s1 && s2))
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(str = ft_strnew(len)))
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str = (char*)malloc(sizeof(char) * (i + j + 1));
+	if (!(str))
 		return (NULL);
-	ft_bzero(str, len);
-	str = ft_strncat(str, s1, len);
-	str = ft_strncat(str, s2, len);
+	i = 0;
+	j = 0;
+	str = ft_strcpy(str, s1);
+	str = ft_strcat(str, s2);
 	return (str);
 }

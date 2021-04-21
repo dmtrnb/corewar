@@ -3,30 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/27 19:34:49 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/13 18:33:23 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/16 16:06:14 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/16 16:29:33 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+static void		ft_free(t_list *alst)
 {
 	t_list	*new;
-	t_list	*head;
 
-	head = NULL;
-	if (lst && f)
+	new = alst;
+	while (new != NULL)
 	{
-		new = (*f)(lst);
-		head = new;
-		while (lst->next)
-		{
-			lst = lst->next;
-			ft_lstaddlast(&new, (*f)(lst));
-		}
+		new = alst->next;
+		free(alst);
+		alst = NULL;
 	}
-	return (head);
+	alst = NULL;
+}
+
+t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+{
+	t_list		*new;
+	t_list		*chaine;
+
+	chaine = (t_list*)malloc(sizeof(t_list));
+	if (!(lst) || !(chaine) || !(f))
+		return (NULL);
+	chaine = f(lst);
+	lst = lst->next;
+	while (lst != NULL)
+	{
+		if ((new = ((t_list*)malloc(sizeof(t_list)))))
+		{
+			*new = *f(lst);
+			ft_list_push_back(chaine, new);
+		}
+		else
+		{
+			ft_free(chaine);
+			return (NULL);
+		}
+		lst = lst->next;
+	}
+	return (chaine);
 }

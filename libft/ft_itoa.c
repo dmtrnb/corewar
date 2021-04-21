@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 20:42:14 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/12 22:18:09 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/06 16:43:47 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/09 15:53:19 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa(int num)
+char	*ft_itoa(int n)
 {
-	int		i;
-	int		znak;
-	int		num_c;
 	char	*str;
+	int		size;
+	int		i;
+	int		k;
 
-	if (num == 0)
-		return (ft_strdup("0"));
-	if (num == -2147483648)
-		return (ft_strdup("-2147483648"));
-	i = 1;
-	num_c = num;
-	while (num_c /= 10)
-		i++;
-	znak = (num < 0 ? 1 : 0);
-	if (!(str = ft_strnew(i + znak)))
+	k = 0;
+	size = 1;
+	i = n;
+	if (n < 0)
+		k = 1;
+	while ((i = i / 10) != 0)
+		size++;
+	str = (char *)malloc(sizeof(char) * (size + 1 + k));
+	if (!(str))
 		return (NULL);
-	*str = (znak ? '-' : 0);
-	num *= (znak ? -1 : 1);
-	while (num)
+	i = size + k - 1;
+	str[0] = '-';
+	str[size + k] = '\0';
+	while (i >= k)
 	{
+		str[i] = '0' + ABS((n % 10));
+		n = n / 10;
 		i--;
-		*(str + i + znak) = num % 10 + 48;
-		num /= 10;
 	}
 	return (str);
 }

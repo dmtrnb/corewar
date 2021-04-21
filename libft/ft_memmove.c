@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <dholiday@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 19:30:54 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/12 18:15:10 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/09 15:57:43 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/23 19:29:05 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
+	char	*dest;
+	char	*sorc;
+	int		i;
 
-	if (!src && !dst)
-		return (NULL);
+	dest = (char*)dst;
+	sorc = (char*)src;
 	i = 0;
-	if (src >= dst)
-		while (i != len)
+	if (sorc > dest)
+		while (i < (int)len)
 		{
-			*((unsigned char *)dst + i) = *((unsigned char *)src + i);
+			dest[i] = sorc[i];
 			i++;
 		}
-	else
-		ft_memcpy(dst, src, len);
-	return (dst);
+	else if (sorc < dest)
+	{
+		i = (int)len - 1;
+		while (i >= 0)
+		{
+			dest[i] = sorc[i];
+			i--;
+		}
+	}
+	return (dest);
 }

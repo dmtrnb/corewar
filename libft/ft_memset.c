@@ -6,25 +6,36 @@
 /*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 03:00:02 by nhamill           #+#    #+#             */
-/*   Updated: 2019/03/24 20:24:24 by nhamill          ###   ########.fr       */
+/*   Updated: 2020/03/07 12:12:57 by nhamill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+static unsigned long long	get_mask(char c)
 {
-	while (len >= 8)
+	unsigned long long	l;
+
+	l = c;
+	l |= l << 8 | l << 16 | l << 24 | l << 32 | l << 40 | l << 48 | l << 56;
+	return (l);
+}
+
+void						*ft_memset(void *b, int c, size_t len)
+{
+	unsigned long long	l;
+	unsigned long long	*ll;
+
+	if (len > sizeof(unsigned long long) * 10)
 	{
-		len -= 8;
-		*((unsigned char *)b + len + 7) = (unsigned char)c;
-		*((unsigned char *)b + len + 6) = (unsigned char)c;
-		*((unsigned char *)b + len + 5) = (unsigned char)c;
-		*((unsigned char *)b + len + 4) = (unsigned char)c;
-		*((unsigned char *)b + len + 3) = (unsigned char)c;
-		*((unsigned char *)b + len + 2) = (unsigned char)c;
-		*((unsigned char *)b + len + 1) = (unsigned char)c;
-		*((unsigned char *)b + len + 0) = (unsigned char)c;
+		l = get_mask(c & 0xff);
+		while (len >= 8)
+		{
+			ll = (unsigned long long *)b;
+			*ll = l;
+			len -= 8;
+			b += 8;
+		}
 	}
 	while (len)
 	{

@@ -3,40 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/29 21:16:23 by nhamill           #+#    #+#             */
-/*   Updated: 2019/04/13 13:43:45 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/06 16:37:49 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/06 16:42:52 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int nb, int fd)
 {
-	int		i;
-	int		znak;
-	char	buf[12];
+	char c;
 
-	i = 11;
-	while (--i >= 0)
-		*(buf + i) = ' ';
-	*(buf + 11) = 0;
-	if (n == -2147483648)
-		ft_putstr_fd("-2147483648", fd);
+	if (nb == -2147483648)
+	{
+		write(fd, "-", 1);
+		write(fd, "2", 1);
+		nb = (nb % 1000000000) * -1;
+	}
+	if (nb < 0)
+	{
+		write(fd, "-", 1);
+		nb = nb * -1;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr_fd(nb / 10, fd);
+		ft_putnbr_fd(nb % 10, fd);
+	}
 	else
 	{
-		i = (n == 0 ? 9 : 10);
-		znak = (n < 0 ? 1 : 0);
-		*(buf + 10) = (n == 0 ? '0' : ' ');
-		n *= (znak ? -1 : 1);
-		while (n)
-		{
-			*(buf + i) = n % 10 + 48;
-			n /= 10;
-			i--;
-		}
-		*(buf + i) = (znak ? '-' : ' ');
-		ft_putstr_fd(buf + i + 1 - znak, fd);
+		c = nb + '0';
+		write(fd, &c, 1);
 	}
 }

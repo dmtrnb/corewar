@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   ft_lstdadd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhamill <nhamill@42.fr>                    +#+  +:+       +#+        */
+/*   By: dholiday <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/27 16:50:36 by nhamill           #+#    #+#             */
-/*   Updated: 2019/03/29 21:26:52 by nhamill          ###   ########.fr       */
+/*   Created: 2019/04/09 21:08:56 by dholiday          #+#    #+#             */
+/*   Updated: 2019/04/10 18:21:29 by dholiday         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 void	ft_lstadd(t_list **alst, t_list *new)
 {
-	t_list	*tmp;
-
-	if ((*alst) && new)
+	if (new)
 	{
-		tmp = (*alst);
-		new->next = tmp;
-		(*alst) = new;
+		new->next = *alst;
+		*alst = new;
 	}
-	else if (!(*alst) && new)
-		(*alst) = new;
 }
